@@ -4,9 +4,27 @@ const FULL_HEART = '♥'
 
 // Your JavaScript code goes here!
 
-
-
-
+const heart = document.getElementsByClassName(`like`)
+function likePost(){
+  heart.addEventListener(`click`, function () {
+    mimicServerCall()
+    .then(function(response) {
+      if (heart.classList.contains(`activated-heart`)){
+        heart.classList.remove(`activated-heart`)
+      } else {
+        heart.classList.add(`activated-heart`)
+      }
+    })
+      .catch(function(error) {
+        const errorModal = document.querySelector(`modal`)
+        errorModal.classList.remove(`hidden`)
+        const errorMessage = errorModal.querySelector(`p`)
+        errorMessage.textContent = error
+        setTimeout(function() {
+          errorModal.classList.add(`hidden`)
+        }, 3000)
+        })
+      })
 //------------------------------------------------------------------------------
 // Don't change the code below: this function mocks the server response
 //------------------------------------------------------------------------------
@@ -20,6 +38,6 @@ function mimicServerCall(url="http://mimicServer.example.com", config={}) {
       } else {
         resolve("Pretend remote server notified of action!");
       }
-    }, 300);
+    }, 3000);
   });
-}
+}}
